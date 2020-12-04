@@ -5,6 +5,12 @@
 /.pnp
 .pnp.js
 .eslintcache
+debug.log
+firebase.json
+.github
+.firebase
+
+
 
 # testing
 /coverage

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+import { connect } from 'react-redux';
 import classes from './QuizCreator.module.css';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
@@ -9,6 +9,10 @@ import {
 	validate,
 	validateForm,
 } from '../../form/formFramework';
+import {
+	createQuizQuestion,
+	finishCreateQuiz,
+} from '../../store/actions/create';
 
 function createOptionControl(number) {
 	return createControl(
@@ -37,9 +41,8 @@ function createFormControls() {
 	};
 }
 
-export default class QuizCreator extends Component {
+class QuizCreator extends Component {
 	state = {
-		quiz: [],
 		rightAnswerId: 1,
 		isFormValid: false,
 		formControls: createFormControls(),
@@ -53,11 +56,10 @@ export default class QuizCreator extends Component {
 			option3,
 			option4,
 		} = this.state.formControls;
-		const quiz = this.state.quiz.concat();
-		const index = quiz.length + 1;
 
 		const questionItem = {
-			id: index,
+			id: this.props.quiz.length + 1,
+			creator: localStorage.getItem('email'),
 			question: question.value,
 			rightAnswerId: this.state.rightAnswerId,
 			answers: [
@@ -79,10 +81,10 @@ export default class QuizCreator extends Component {
 				},
 			],
 		};
-		quiz.push(questionItem);
+
+		this.props.createQuizQuestion(questionItem);
 
 		this.setState({
-			quiz,
 			rightAnswerId: 1,
 			isFormValid: false,
 			formControls: createFormControls(),
@@ -90,7 +92,13 @@ export default class QuizCreator extends Component {
 	};
 
 	createQuizHandler = () => {
-		console.log(this.state.quiz)
+		this.setState({
+			rightAnswerId: 1,
+			isFormValid: false,
+			formControls: createFormControls(),
+		});
+
+		this.props.finishCreateQuiz();
 	};
 
 	selectChangeHandler = (event) => {
@@ -156,7 +164,7 @@ export default class QuizCreator extends Component {
 						<Button
 							type="success"
 							onClick={this.createQuizHandler}
-							disabled={this.state.quiz.length === 0}>
+							disabled={this.props.quiz.length === 0}>
 							Создать тест
 						</Button>
 					</form>
@@ -165,3 +173,14 @@ export default class QuizCreator extends Component {
 		);
 	}
 }
+
+const mapStateToProps = (state) => ({
+	quiz: state.create.quiz,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	createQuizQuestion: (item) => dispatch(createQuizQuestion(item)),
+	finishCreateQuiz: () => dispatch(finishCreateQuiz()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuizCreator);

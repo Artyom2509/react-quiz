@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import classes from './Auth.module.css';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
+import { connect } from 'react-redux';
+import { auth } from '../../store/actions/auth';
 
-export default class Auth extends Component {
+class Auth extends Component {
 	state = {
 		isFormValid: false,
 		formControls: {
@@ -90,18 +92,24 @@ export default class Auth extends Component {
 		return inputs;
 	};
 
-	loginHandler = () => {};
+	loginHandler = () => {
+		const { email, password } = this.state.formControls;
+		this.props.auth(email.value, password.value, true);
+	};
 
-	registrHandler = () => {};
-
-	submitHandler = (e) => e.preventDefault();
+	registrHandler = () => {
+		const { email, password } = this.state.formControls;
+		this.props.auth(email.value, password.value, false);
+	};
 
 	render() {
 		return (
 			<div className={classes.Auth}>
 				<div>
 					<h1>Authorization</h1>
-					<form className={classes.AuthForm} onSubmit={this.submitHandler}>
+					<form
+						className={classes.AuthForm}
+						onSubmit={(e) => e.preventDefault()}>
 						{this.renderInputs()}
 
 						<Button
@@ -122,3 +130,9 @@ export default class Auth extends Component {
 		);
 	}
 }
+
+const mapDispatchToProps = (dispatch) => ({
+	auth: (email, password, isLogin) => dispatch(auth(email, password, isLogin)),
+});
+
+export default connect(null, mapDispatchToProps)(Auth);

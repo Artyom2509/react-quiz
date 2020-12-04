@@ -38,7 +38,7 @@ export default function FinishedQuiz({ quiz, results, onRetry }) {
 					Повторить
 				</Button>
 				<Link to="/">
-					<Button onClick={onRetry} type="success">
+					<Button type="success">
 						Перейти в список тестов
 					</Button>
 				</Link>
