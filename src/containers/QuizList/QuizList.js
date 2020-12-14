@@ -41,10 +41,8 @@ const mapStateToProps = (state) => ({
 	isLoaded: state.quiz.isLoaded,
 });
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		fetchQuizes: () => dispatch(fetchQuizes()),
-	};
+const mapDispatchToProps = {
+	fetchQuizes,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuizList);

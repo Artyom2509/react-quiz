@@ -78,12 +78,10 @@ const mapStateToProps = (state) => ({
 	isLoaded: state.quiz.isLoaded,
 });
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		fetchQuizById: (id) => dispatch(fetchQuizById(id)),
-		quizAnswerClick: (id) => dispatch(quizAnswerClick(id)),
-		retryQuiz: () => dispatch(retryQuiz()),
-	};
+const mapDispatchToProps = {
+	fetchQuizById,
+	quizAnswerClick,
+	retryQuiz,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Quiz);

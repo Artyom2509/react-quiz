@@ -178,9 +178,9 @@ const mapStateToProps = (state) => ({
 	quiz: state.create.quiz,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-	createQuizQuestion: (item) => dispatch(createQuizQuestion(item)),
-	finishCreateQuiz: () => dispatch(finishCreateQuiz()),
-});
+const mapDispatchToProps = {
+	createQuizQuestion,
+	finishCreateQuiz,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuizCreator);

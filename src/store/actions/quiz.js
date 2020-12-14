@@ -98,8 +98,9 @@ export const finishQuiz = () => ({
 	type: QUIZ_FINISH,
 });
 
-export const fetchQuizesStart = () => ({
+export const fetchQuizesStart = (fff) => ({
 	type: FETCH_QUIZES_START,
+	fff
 });
 
 export const fetchQuizesSucces = (quizes) => ({

@@ -40,6 +40,4 @@ const mapStateToProps = (state) => ({
 	isAuthenticated: !!state.auth.token,
 });
 
-// const mapDispatchToProps = {};
-
 export default connect(mapStateToProps)(Layout);

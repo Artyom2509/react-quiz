@@ -131,8 +131,8 @@ class Auth extends Component {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => ({
-	auth: (email, password, isLogin) => dispatch(auth(email, password, isLogin)),
-});
+const mapDispatchToProps = {
+	auth,
+};
 
 export default connect(null, mapDispatchToProps)(Auth);
