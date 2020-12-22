@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { AUTH_LOGOUT, AUTH_SUCCESS } from './actionTypes';
+import { alertHandler } from './alert';
 
 const fbAuth = () => firebase.auth();
 
@@ -12,7 +13,7 @@ export const auth = (email, password, isLogin) => {
 
 		try {
 			const data = await authPromise;
-			const timeout = +data.user.metadata.b + 180000;
+			const timeout = +data.user.metadata.b + 80000;
 			const expirationDate = new Date(timeout);
 
 			window.localStorage.setItem('uid', data.user.uid);
@@ -21,9 +22,10 @@ export const auth = (email, password, isLogin) => {
 			window.localStorage.setItem('expirationDate', expirationDate);
 
 			dispatch(authSuccess(data.user.a.c));
-			dispatch(autoLogout(180000));
+			alertHandler(`${data.user.email} прошел авторизацию!`, 'Success',)(dispatch);
+			dispatch(autoLogout(85000));
 		} catch (error) {
-			console.log('auth -> error', error);
+			alertHandler(`${error}`, 'Error',)(dispatch);
 		}
 	};
 };
@@ -36,6 +38,7 @@ export const authSuccess = (token) => ({
 const autoLogout = (time) => (dispatch) => {
 	setTimeout(() => {
 		dispatch(logout());
+		alertHandler(`Время истекло!`, 'Error',)(dispatch);
 	}, time);
 };
 

@@ -1,5 +1,6 @@
 import { RESET_QUIZ_CREATION, QUIZ_QUESTION_CREATE } from './actionTypes';
 import axios from '../../server/axios-quiz';
+import { alertHandler } from './alert';
 
 export const createQuizQuestion = (item) => ({
 	type: QUIZ_QUESTION_CREATE,
@@ -9,9 +10,10 @@ export const createQuizQuestion = (item) => ({
 export const finishCreateQuiz = () => async (dispatch, getState) => {
 	try {
     await axios.post(`/quizes.json`, getState().create.quiz);
-    dispatch(resetQuizCreation())
+		dispatch(resetQuizCreation())
+		alertHandler(`Quiz создан успешно`, 'Succes',)(dispatch);
 	} catch (error) {
-		console.log(error);
+		alertHandler(`${error}`, 'Error',)(dispatch);
 	}
 };
 

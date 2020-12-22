@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import Logout from './components/Logout/Logout';
 import { compose } from 'redux';
 import { autoLogin, checkAuth } from './store/actions/auth';
+import Alert from './components/Alert/Alert';
 
 class App extends Component {
 	componentDidMount() {
@@ -38,7 +39,12 @@ class App extends Component {
 			);
 		}
 
-		return <Layout>{routes}</Layout>;
+		return (
+			<Layout>
+				<Alert />
+				{routes}
+			</Layout>
+		);
 	}
 }
 
@@ -46,10 +52,10 @@ const mapStateToProps = (state) => ({
 	isAuthenticated: !!state.auth.token,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-	autoLogin: () => dispatch(autoLogin()),
-	checkAuth: () => dispatch(checkAuth()),
-});
+const mapDispatchToProps = {
+	autoLogin,
+	checkAuth,
+};
 
 export default compose(
 	withRouter,

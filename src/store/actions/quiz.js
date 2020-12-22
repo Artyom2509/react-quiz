@@ -1,4 +1,5 @@
 import axios from '../../server/axios-quiz';
+import { alertHandler } from './alert';
 import {
 	FETCH_QUIZES_ERROR,
 	FETCH_QUIZES_START,
@@ -20,12 +21,16 @@ export const fetchQuizes = () => {
 
 			Object.keys(response.data).forEach((key, idx) => {
 				const creator = response.data[key][0].creator;
-				quizes.push({ id: key, name: `Тест №${idx + 1}.  Создатель: ${creator || 'Аноним'}` });
+				quizes.push({
+					id: key,
+					name: `Тест №${idx + 1}.  Создатель: ${creator || 'Аноним'}`,
+				});
 			});
 
 			dispatch(fetchQuizesSucces(quizes));
 		} catch (error) {
 			dispatch(fetchQuizesError(error));
+			alertHandler(`${error}`, 'Error')(dispatch);
 		}
 	};
 };
@@ -70,6 +75,7 @@ export const quizAnswerClick = (answerId) => {
 			}
 
 			dispatch(quizSetState({ [answerId]: 'success' }, results));
+			alertHandler(`Правильный ответ`, 'Success')(dispatch);
 
 			const timeout = setTimeout(() => {
 				if (isQuizFinished(state)) {
@@ -82,6 +88,15 @@ export const quizAnswerClick = (answerId) => {
 		} else {
 			results[question.id] = 'error';
 			dispatch(quizSetState({ [answerId]: 'error' }, results));
+			alertHandler(`Неправильный ответ`, 'Error')(dispatch);
+		
+			if (state.answersState) {
+				const key = Object.keys(state.answersState)[0];
+				if (state.answersState[key] === 'error') {
+					alertHandler(`Выберите правильный ответ`)(dispatch);
+					return;
+				}
+			}
 		}
 	};
 };
@@ -100,7 +115,7 @@ export const finishQuiz = () => ({
 
 export const fetchQuizesStart = (fff) => ({
 	type: FETCH_QUIZES_START,
-	fff
+	fff,
 });
 
 export const fetchQuizesSucces = (quizes) => ({
