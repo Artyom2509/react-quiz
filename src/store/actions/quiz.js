@@ -88,14 +88,15 @@ export const quizAnswerClick = (answerId) => {
 		} else {
 			results[question.id] = 'error';
 			dispatch(quizSetState({ [answerId]: 'error' }, results));
-			alertHandler(`Неправильный ответ`, 'Error')(dispatch);
-		
+
 			if (state.answersState) {
 				const key = Object.keys(state.answersState)[0];
 				if (state.answersState[key] === 'error') {
 					alertHandler(`Выберите правильный ответ`)(dispatch);
 					return;
 				}
+			} else {
+				alertHandler(`Неправильный ответ`, 'Error')(dispatch);
 			}
 		}
 	};

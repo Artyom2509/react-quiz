@@ -1,10 +1,27 @@
-.Alert {
+.Warning {
   display: block;
   position: fixed;
+  width: 300px;
   padding: 15px 20px;
-  top: 20px;
-  right: 20px;
+  top: 0px;
+  right: 0px;
   border-radius: 8px;
+}
+
+.Warning>div {
+  display: block;
+  position: relative;
+  top: 0px;
+  right: 0px;
+  border-radius: 8px;
+}
+
+.Alert {
+  display: block;
+  position: relative;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 8px;
 }
 
 .Alert button {
@@ -38,4 +55,14 @@
 
 .Alert.Error button {
   color: #fff;
+}
+
+.Line {
+  background-color: #f4c81b;
+  position: absolute;
+  height: 5px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 0 0 8px 8px;
 }

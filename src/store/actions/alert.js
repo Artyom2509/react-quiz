@@ -1,19 +1,16 @@
 import { ALERT_SHOW, ALERT_HIDE } from './actionTypes';
 
-export const alertHandler = (message, model = 'Default', time = 3000) => (dispatch) => {
-	dispatch(alertShow(message, model));
-
-	setTimeout(() => {
-		dispatch(alertHide());
-	}, time);
+export const alertHandler = (message, model = 'Default') => (dispatch) => {
+	const id = parseInt(Math.random() * 10000);
+	dispatch(alertShow(id, message, model));
 };
 
-export const alertShow = (message, model) => ({
+export const alertShow = (id, message, model = 'Default') => ({
 	type: ALERT_SHOW,
-	message,
-	model,
+	alert: { id, message, model },
 });
 
-export const alertHide = () => ({
+export const alertHide = (id) => ({
 	type: ALERT_HIDE,
+	id,
 });

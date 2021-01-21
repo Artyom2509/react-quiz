@@ -1,19 +1,10 @@
 import { ALERT_SHOW, ALERT_HIDE } from '../actions/actionTypes';
 
-const initialState = {
-	show: false,
-	model: null,
-	message: null,
-};
+const initialState = [];
 
 const handlers = {
-	[ALERT_HIDE]: (state) => ({ ...state, show: false, message: null }),
-	[ALERT_SHOW]: (state, { message, model }) => ({
-		...state,
-		show: true,
-		message,
-		model,
-	}),
+	[ALERT_HIDE]: (state, {id}) => [...state].filter((el) => el.id !== id),
+	[ALERT_SHOW]: (state, {alert}) => [...state, alert],
 	DEFAULT: (state) => state,
 };
 

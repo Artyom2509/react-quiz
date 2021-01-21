@@ -10,6 +10,7 @@ import Logout from './components/Logout/Logout';
 import { compose } from 'redux';
 import { autoLogin, checkAuth } from './store/actions/auth';
 import Alert from './components/Alert/Alert';
+import Warning from './components/Alert/Warning';
 
 class App extends Component {
 	componentDidMount() {
@@ -41,7 +42,7 @@ class App extends Component {
 
 		return (
 			<Layout>
-				<Alert />
+				<Warning />
 				{routes}
 			</Layout>
 		);
