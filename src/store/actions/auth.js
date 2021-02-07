@@ -13,7 +13,7 @@ export const auth = (email, password, isLogin) => {
 
 		try {
 			const data = await authPromise;
-			const timeout = +data.user.metadata.b + 80000;
+			const timeout = +data.user.metadata.b + 580000;
 			const expirationDate = new Date(timeout);
 
 			window.localStorage.setItem('uid', data.user.uid);
@@ -23,7 +23,7 @@ export const auth = (email, password, isLogin) => {
 
 			dispatch(authSuccess(data.user.a.c));
 			alertHandler(`${data.user.email} прошел авторизацию!`, 'Success',)(dispatch);
-			dispatch(autoLogout(85000));
+			dispatch(autoLogout(585000));
 		} catch (error) {
 			alertHandler(`${error}`, 'Error',)(dispatch);
 		}

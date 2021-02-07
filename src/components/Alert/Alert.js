@@ -50,7 +50,8 @@ function Alert({ id, message, alertHide, model }) {
 		<div
 			className={cls.join(' ')}
 			onMouseEnter={stopTimer}
-			onMouseLeave={startTimer}>
+			onMouseLeave={startTimer}
+			onClick={hideAlert}>
 			<button onClick={hideAlert}>x</button>
 			{message}
 			<div

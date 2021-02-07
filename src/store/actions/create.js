@@ -11,7 +11,7 @@ export const finishCreateQuiz = () => async (dispatch, getState) => {
 	try {
     await axios.post(`/quizes.json`, getState().create.quiz);
 		dispatch(resetQuizCreation())
-		alertHandler(`Quiz создан успешно`, 'Succes',)(dispatch);
+		alertHandler(`Quiz создан успешно`, 'Success',)(dispatch);
 	} catch (error) {
 		alertHandler(`${error}`, 'Error',)(dispatch);
 	}
